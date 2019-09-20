@@ -1,0 +1,20 @@
+#+title: Apuntes de gráficas
+
+#+author: Mónica Villarroel Ramírez
+
+* Definición de gráfica
+  Una gŕafica \(G\) consta de dos conuntos uno de vertices y otros de aristas 
+** Vértices y aristas
+
+** Orden y tamaño
+
+** Gráficas regulares
+
+*** Gráficas cubicas
+
+** Isomorfismos y gráficas
+
+
+* Complemento de una gráfica
+
+* El teorema fundamental 
