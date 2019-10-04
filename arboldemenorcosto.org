@@ -1,0 +1,146 @@
+#+title: Árbol generador de menor costo
+#+options: toc:nill
+
+#+latex_header: \usepackage{listings}
+#+latex_header: \lstalias{ipython}{python}
+#+latex_header: \lstset{basicstyle=\small\ttfamily, frame=single}
+
+#+latex_header: \usepackage{bera}
+
+#+property: header-args:ipython :exports both :cache yes :session arbol :results row drawer
+
+* Problema
+
+Supongamos que a cada arista de la gráfica completa \(K_{n}\) se le
+asigna un valor ("peso"). Si a cada subgráfica le asignamos un peso
+igual a la suma de los pesos de sus aristas, consideremos el problema
+de encontrar el árbol generado de menor peso. 
+
+* Algoritmo de Kruskarl
+
+El algoritmo de kruskarl consiste en escoger sucesivamente las aristas
+más baratas con tal de que no formen ciclos con las aristas escogidas
+previamente. En una gráfica con \(n\) vértices se puede demostrar que
+tal algortimo termina cuando hallamos escogido \(n-1\) aristas, y que
+el árbol asi construido es tal que tiene costo mínimo. 
+
+* Implementación en Python
+
+
+Primeramente vamos a importar las bibliotecas que vamos a utilizar.
+
+#+begin_src ipython
+import networkx as nx
+import matplotlib.pyplot as plt
+from random import random as random 
+from scipy.spatial.distance import euclidean
+#+end_src
+
+#+RESULTS[70f2144537e3656bc1421b56b9894bba79144018]:
+:results:
+# Out[3]:
+:end:
+
+#+begin_src ipython
+g=nx.gnp_random_graph(10,0.2)
+#+end_src
+
+#+RESULTS[e19bc97e954a9b31a3305334a2e5e27a93be229f]:
+:results:
+# Out[10]:
+:end:
+
+Veremos si nuestra grafica es un bosque
+
+
+#+begin_src ipython
+nx.is_forest(g), nx.is_connected(g)
+#+end_src
+
+#+RESULTS[72bf57877729727c1ec55d705e150fd5f69f953e]:
+:results:
+# Out[11]:
+: (True, False)
+:end:
+
+
+A continuació dibujaremos esta gráfica.
+#+begin_src ipython
+nx.draw(g, with_labels=True)
+#+end_src
+
+#+RESULTS[30f3500fc4968f6c501f062ce053236819df32e2]:
+:results:
+# Out[12]:
+[[file:./obipy-resources/2147wKB.png]]
+:end:
+
+
+Calcularemos las componenentes conexas de esta gráfica:
+
+#+begin_src ipython
+list(nx.connected_components(g))
+#+end_src
+
+#+RESULTS[42f722e9f9c19b6547badd31c723b822e22d76dc]:
+:results:
+# Out[14]:
+: [{0, 1, 2, 3, 4, 5, 6, 7, 9}, {8}]
+:end:
+
+Veamos la componente que contiene el vértice 3.
+
+#+begin_src ipython
+nx.node_connected_component(g,2)
+#+end_src
+
+#+RESULTS[2d9eb36e57774712b63cd27cd2fd528358d0fca5]:
+:results:
+# Out[16]:
+: {0, 1, 2, 3, 4, 5, 6, 7, 9}
+:end:
+
+
+A continuación dibujaremos un árbol escogido aleatoriamente
+
+#+begin_src ipython
+t=nx.random_tree(10)
+nx.draw(t, with_labels=True)
+#+end_src
+
+#+RESULTS[73c2e85e00828fab1c51b4f4fa52d72a0b3e7c9d]:
+:results:
+# Out[18]:
+[[file:./obipy-resources/2147KfN.png]]
+:end:
+
+* Puntos en el plano 
+
+Si tenemos dos listas de números detamaño =n=, podemos dibujar =n=
+puntos en el plano, tomando las coordenadas =x= de la primera lista y
+las coordenadas =y= de la segunda.
+
+#+begin_src ipython
+plt.plot([1,1,2],[1,2,3],'bx')
+plt.axis([0,3,0,4])
+plt.show()
+#+end_src
+
+#+RESULTS[b6490774d3a155a7b15dcb08d9926cb1d013f369]:
+:results:
+# Out[21]:
+[[file:./obipy-resources/2147x9f.png]]
+:end:
+
+#+begin_src ipython
+plt.plot([1,1,2],[1,2,3],'ro')
+plt.axis([0,3,0,4])
+plt.show()
+#+end_src
+
+
+
+# Local Variables:
+# org-confirm-babel-evaluate: nil
+# End:
+
